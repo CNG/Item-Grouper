@@ -33,11 +33,20 @@ class Item {
   public function getID() {
     return $this->id;
   }
-  public function exposureCount($item) {
-    if (array_key_exists($item->getID(), $this->exposures)) {
-      return $this->exposures[$item->getID()];
+  /**
+   * Return number of exposures to Item supplied or number of Items exposed to.
+   * @param Item $item Item against which this Item will be tests for exposure
+   * @return int Number of exposures to supplied Item or number of Items exposed to
+   */
+  public function exposureCount($item = NULL) {
+    if(isset($item)) {
+      if(array_key_exists($item->getID(), $this->exposures)) {
+        return $this->exposures[$item->getID()];
+      } else {
+        return 0;
+      }
     } else {
-      return 0;
+      return count($this->exposures);
     }
   }
   public function expose($item) {
